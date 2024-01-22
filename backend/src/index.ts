@@ -1,22 +1,15 @@
-const express = require("express");
 import dotenv from "dotenv";
-import mainRouter from "./routes/index";
+import { app } from "./app";
+import connectDB from "./db";
 dotenv.config({
   path: "./.env",
 });
 
-const cors = require("cors");
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.use("/api/v1", mainRouter);
-app.listen(process.env.PORT || 3000);
-
-// /api/v1/user/signup
-// /api/v1/user/signin
-// /api/v1/user/changePassword ....
-
-// /api/v1/account/transferMoney
-// /api/v1/account/balance
+connectDB().then(() => { 
+  app.listen(process.env.PORT || 3000, () => { 
+    console.log(`Server running on port ${process.env.PORT || 3000}`); 
+  });
+}).catch((error) => {
+  console.log("MONGODB connection error ", error);
+  process.exit(1);
+});
