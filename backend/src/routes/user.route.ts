@@ -1,4 +1,11 @@
 import express from 'express';
-const userRouter = express.Router();
+import { createUser } from '../controllers/user.controller';
+const router = express.Router();
 
-export default userRouter;
+router.route('/signup').post(createUser);
+
+export default router;
+
+// /api/v1/user/signup
+// /api/v1/user/signin
+// /api/v1/user/changePassword ....
